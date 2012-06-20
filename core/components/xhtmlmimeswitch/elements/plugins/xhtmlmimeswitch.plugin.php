@@ -39,10 +39,8 @@ if($event == 'OnWebPagePrerender')
 	$xml = ($resource->get('contentType') === $header->xml) ? TRUE : FALSE;
 
 	if($xml) {
-		$accepts = $_SERVER['HTTP_ACCEPT'];
-
 		$xhtml = TRUE;
-		$cache_name = 'xhtml';
+		$accepts = $_SERVER['HTTP_ACCEPT'];
 
 		// Regex to match the client accept header
 		$regex = "/\b" . str_replace('/', '\/', preg_quote($header->xml)) . "\b/i";
@@ -63,6 +61,7 @@ if($event == 'OnWebPagePrerender')
 
 		// Handle the cache
 		if($cacheable) {
+			$cache_name = 'xhtml';
 			$id = $resource->get('id');
 
 			$cache_opts = array(
@@ -75,8 +74,8 @@ if($event == 'OnWebPagePrerender')
 				$modx->cacheManager->set($id, $resource->process(), 0, $cache_opts);
 				$cache = $modx->cacheManager->get($id, $cache_opts);
 			}
+			
+			$resource->_content = $resource->_output = $cache;
 		}
-
-		$resource->_content = $resource->_output = $cache;
 	}
 }
