@@ -51,7 +51,7 @@ $modx =& $object->xpdo;
  */
 
 $pluginEvents = array('OnWebPagePrerender');
-$plugins = array('XHTMLMIMESwitch');
+$plugins = array('XHTML MIME Switch');
 $category = 'XHTML MIME Switch';
 
 $hasPlugins = TRUE;
@@ -217,7 +217,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
          * }
          *
          */
-         $snippetName = 'MySnippet1';
+         /*$snippetName = 'MySnippet1';
          $propertySetName = 'MyPropertySet1';
          $snippet = $modx->getObject('modSnippet', array('name'=>$snippetName));
          if ($snippet) {
@@ -239,7 +239,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
 
          } else {
                  $modx->log(xPDO::LOG_LEVEL_INFO,'Could not retrieve snippet: ' . $snippetName);
-         }
+         }*/
 
         break;
 
