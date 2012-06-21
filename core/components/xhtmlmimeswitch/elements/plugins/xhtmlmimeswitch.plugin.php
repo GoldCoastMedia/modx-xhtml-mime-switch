@@ -39,43 +39,37 @@ if($event == 'OnWebPagePrerender')
 	$xml = ($resource->get('contentType') === $header->xml) ? TRUE : FALSE;
 
 	if($xml) {
-		$xhtml = TRUE;
 		$accepts = $_SERVER['HTTP_ACCEPT'];
 
 		// Regex to match the client accept header
 		$regex = "/\b" . str_replace('/', '\/', preg_quote($header->xml)) . "\b/i";
 
 		// Serve as HTML to non-accepting clients
-		if(!preg_match($regex, $accepts)) {
-			$xhtml = FALSE;
+		if(!preg_match($regex, $accepts))
 			$resource->ContentType->set('mime_type', $header->html);
-		}
 
 		/*
-		 * We want to prevent MODx from caching the pages and serving
-		 * them with the wrong MIME type. If caching is enabled
-		 * temporarily disable it so we can manage it ourself.
+		 * Use our own internal caching method
+		 * TODO: Improve and test for performance
 		 */
 		$cacheable = (bool) $resource->get('cacheable');
-		$resource->set('cacheable', 0);
 
 		// Handle the cache
 		if($cacheable) {
-			$cache_name = 'xhtml';
 			$id = $resource->get('id');
 
 			$cache_opts = array(
-				xPDO::OPT_CACHE_KEY => $cache_name,
+				xPDO::OPT_CACHE_KEY => 'xhtml',
 			);
 
-			$cache = $modx->cacheManager->get($id, $cache_opts);
+			$output = $modx->cacheManager->get($id, $cache_opts);
 
 			if(empty($cache)) {
-				$modx->cacheManager->set($id, $resource->process(), 0, $cache_opts);
-				$cache = $modx->cacheManager->get($id, $cache_opts);
+				$modx->cacheManager->set($id, $resource->_output, 0, $cache_opts);
+				$output = $cache = $modx->cacheManager->get($id, $cache_opts);
 			}
-			
-			$resource->_content = $resource->_output = $cache;
+
+			$resource->_content = $resource->_output = $output;
 		}
 	}
 }
