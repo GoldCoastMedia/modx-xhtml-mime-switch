@@ -66,7 +66,7 @@ if($event == 'OnWebPagePrerender')
 
 			if(empty($cache)) {
 				$modx->cacheManager->set($id, $resource->_output, 0, $cache_opts);
-				$output = $cache = $modx->cacheManager->get($id, $cache_opts);
+				$output = $modx->cacheManager->get($id, $cache_opts);
 			}
 
 			$resource->_content = $resource->_output = $output;
