@@ -10,10 +10,13 @@ document to 'text/html' if it is not present.
 Intended to be used with polyglot markup without the need for any server side 
 configuration.
 
+**NOTE: This only works on MODx documents that use a Content Type serving a 'application/xhtml+xml' MIME.**
+
 Installation
 -----------
-*To be done*
+Please download and install via the MODx Revolution Package Manager.
 
 Documentation
 ------------
-*To be done*
+Full detailed documentation available at:
+http://www.goldcoastmedia.co.uk/tools/modx-xhtml-mime-switch
